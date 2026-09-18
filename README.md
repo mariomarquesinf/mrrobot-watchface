@@ -33,6 +33,15 @@ own first-party faces. The trade-offs that shaped this project:
   watch and observing it. Every layout and data-binding decision in this repo was
   validated empirically over ADB (live `logcat` + on-device screenshots), which is worth
   knowing before assuming "it renders" means "it's correct."
+- **Validated against Google's own Play Store tooling.** Ran the
+  [`memory-footprint`](https://github.com/google/watchface/tree/main/play-validations)
+  evaluator — the same schema/memory check Google Play runs on watch face submissions —
+  against the built APK. It caught a real bug `aapt2` had missed:
+  `isCustomizable="true"` is invalid per the WFF schema, which requires uppercase
+  `TRUE`/`FALSE` (fixed in `watchface.xml`). It also surfaced what looks like a bug in the
+  tool's own resource resolver for plain scene-level `PartImage` references (as opposed
+  to complication icons) — traced to a recently-touched file in that project rather than
+  worked around blindly.
 
 ## Features
 

@@ -175,7 +175,7 @@
             slotId="0"
             supportedTypes="SHORT_TEXT EMPTY"
             x="10" y="224" width="210" height="24"
-            isCustomizable="true"
+            isCustomizable="TRUE"
             tintColor="[CONFIGURATION.themeColor.1]"
             displayName="slot_weather_label">
             <BoundingBox x="0" y="0" width="210" height="24" />
@@ -205,7 +205,7 @@
             slotId="1"
             supportedTypes="SHORT_TEXT EMPTY"
             x="230" y="224" width="210" height="24"
-            isCustomizable="true"
+            isCustomizable="TRUE"
             tintColor="[CONFIGURATION.themeColor.1]"
             displayName="slot_heart_label">
             <BoundingBox x="0" y="0" width="210" height="24" />
@@ -235,7 +235,7 @@
             slotId="2"
             supportedTypes="RANGED_VALUE SHORT_TEXT EMPTY"
             x="10" y="250" width="210" height="24"
-            isCustomizable="true"
+            isCustomizable="TRUE"
             tintColor="[CONFIGURATION.themeColor.0]"
             displayName="slot_readiness_label">
             <BoundingBox x="0" y="0" width="210" height="24" />
@@ -283,7 +283,7 @@
             slotId="3"
             supportedTypes="RANGED_VALUE SHORT_TEXT EMPTY"
             x="230" y="250" width="210" height="24"
-            isCustomizable="true"
+            isCustomizable="TRUE"
             tintColor="[CONFIGURATION.themeColor.0]"
             displayName="slot_steps_label">
             <BoundingBox x="0" y="0" width="210" height="24" />

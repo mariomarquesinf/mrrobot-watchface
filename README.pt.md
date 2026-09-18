@@ -36,6 +36,15 @@ Os compromissos que moldaram este projeto:
   ligação de dados deste repositório foram validadas empiricamente via ADB (`logcat` ao
   vivo + screenshots no dispositivo), o que vale a pena saber antes de assumir que
   "renderiza" significa "está correto."
+- **Validado com as ferramentas oficiais da Google para a Play Store.** Corri o
+  avaliador [`memory-footprint`](https://github.com/google/watchface/tree/main/play-validations)
+  — a mesma verificação de esquema/memória que a Google Play executa sobre submissões de
+  watch faces — contra o APK compilado. Apanhou um bug real que o `aapt2` não detetou:
+  `isCustomizable="true"` é inválido segundo o esquema do WFF, que exige `TRUE`/`FALSE`
+  em maiúsculas (corrigido no `watchface.xml`). Também revelou o que parece ser um bug no
+  próprio resolvedor de recursos da ferramenta para referências `PartImage` ao nível da
+  cena (ao contrário de ícones de complicações) — rastreado até um ficheiro recentemente
+  alterado nesse projeto, em vez de contornado às cegas.
 
 ## Funcionalidades
 
