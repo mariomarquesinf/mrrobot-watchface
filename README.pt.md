@@ -36,15 +36,25 @@ Os compromissos que moldaram este projeto:
   ligação de dados deste repositório foram validadas empiricamente via ADB (`logcat` ao
   vivo + screenshots no dispositivo), o que vale a pena saber antes de assumir que
   "renderiza" significa "está correto."
-- **Validado com as ferramentas oficiais da Google para a Play Store.** Corri o
-  avaliador [`memory-footprint`](https://github.com/google/watchface/tree/main/play-validations)
-  — a mesma verificação de esquema/memória que a Google Play executa sobre submissões de
-  watch faces — contra o APK compilado. Apanhou um bug real que o `aapt2` não detetou:
-  `isCustomizable="true"` é inválido segundo o esquema do WFF, que exige `TRUE`/`FALSE`
-  em maiúsculas (corrigido no `watchface.xml`). Também revelou o que parece ser um bug no
-  próprio resolvedor de recursos da ferramenta para referências `PartImage` ao nível da
-  cena (ao contrário de ícones de complicações) — rastreado até um ficheiro recentemente
-  alterado nesse projeto, em vez de contornado às cegas.
+- **Validado por esquema em CI, não só testado manualmente.** O `aapt2` empacota sem
+  problemas um `watchface.xml` que viola o esquema real do WFF — não detetou nada de
+  errado com `isCustomizable="true"`, que é inválido (o esquema exige `TRUE`/`FALSE` em
+  maiúsculas). Esse bug só foi encontrado ao correr o
+  [validador XSD](https://github.com/google/watchface/tree/main/third_party/wff) oficial
+  da Google contra o XML fonte — a mesma ferramenta usada para certificar watch faces
+  para submissão na Play Store. Depois de corrigido, o `watchface.xml` **passa sem erros
+  contra a versão 1 e também contra a versão 5 (a mais recente) do formato**. Esta
+  verificação corre agora em cada push via [CI](.github/workflows/build.yml), pelo que
+  uma futura regressão de esquema falha o build em vez de seguir para produção em
+  silêncio.
+- Também corri o avaliador
+  [`memory-footprint`](https://github.com/google/watchface/tree/main/play-validations)
+  da Google (a verificação de orçamento de memória da Play Store) contra o APK
+  compilado. Encontrei o que parece ser um bug no próprio resolvedor de recursos dessa
+  ferramenta para referências `PartImage` ao nível da cena — confirmado como um problema
+  da ferramenta, não nosso, assim que o validador XSD acima deu ao XML um passe limpo.
+  Rastreado até um ficheiro recentemente alterado nesse projeto, em vez de contornado às
+  cegas.
 
 ## Funcionalidades
 
@@ -107,6 +117,18 @@ tentada:
   tamanhos de letra pequenos perto das posições de 9/3 horas resulta em ruído
   ilegível. A correção não foi uma correção de bug, foi uma mudança de design: passar
   para texto horizontal reto.
+- **Fallback de fonte entre dispositivos, corrigido ao nível dos metadados.** Um
+  utilizador reportou que os tipos de letra não coincidiam num Galaxy Watch 6. O WFF
+  resolve `Font family="…"` pelo *nome do ficheiro*, o que `roboto_mono_bold.ttf` e
+  `roboto_mono_regular.ttf` já faziam corretamente — mas ao inspecionar os tipos de
+  letra compilados (`fontTools`), ambos os ficheiros declaravam o *mesmo nome de
+  família interno* ("Roboto Mono"), diferindo apenas na subfamília. O renderizador do
+  Pixel Watch tolera isso; outras implementações de carregamento de fontes no Wear OS
+  parecem des-duplicar/colocar em cache os tipos de letra pelo nome de família interno,
+  o que colapsaria silenciosamente os dois pesos num só (ou falharia a resolver
+  qualquer um deles, recorrendo à fonte do sistema — exatamente o sintoma reportado).
+  Corrigido atribuindo a cada ficheiro um nome de família interno distinto, coincidente
+  com o seu nome de ficheiro, sem necessidade de alterar XML ou nomes de ficheiro.
 
 ## Paletas de cor
 

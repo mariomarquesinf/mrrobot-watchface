@@ -30,3 +30,15 @@ jobs:
         with:
           name: mrrobot-watchface-debug
           path: app/build/outputs/apk/debug/*.apk
+
+      - name: Fetch Google's official WFF XSD validator
+        run: |
+          git clone --depth 1 https://github.com/google/watchface.git /tmp/watchface-tools
+          cd /tmp/watchface-tools/third_party/wff
+          chmod +x gradlew
+          ./gradlew :specification:validator:executable-jar --stacktrace
+
+      - name: Validate watchface.xml against the official WFF schema
+        run: |
+          java -jar /tmp/watchface-tools/third_party/wff/specification/validator/build/libs/wff-validator.jar \
+            5 app/src/main/res/raw/watchface.xml

@@ -33,15 +33,22 @@ own first-party faces. The trade-offs that shaped this project:
   watch and observing it. Every layout and data-binding decision in this repo was
   validated empirically over ADB (live `logcat` + on-device screenshots), which is worth
   knowing before assuming "it renders" means "it's correct."
-- **Validated against Google's own Play Store tooling.** Ran the
-  [`memory-footprint`](https://github.com/google/watchface/tree/main/play-validations)
-  evaluator — the same schema/memory check Google Play runs on watch face submissions —
-  against the built APK. It caught a real bug `aapt2` had missed:
-  `isCustomizable="true"` is invalid per the WFF schema, which requires uppercase
-  `TRUE`/`FALSE` (fixed in `watchface.xml`). It also surfaced what looks like a bug in the
-  tool's own resource resolver for plain scene-level `PartImage` references (as opposed
-  to complication icons) — traced to a recently-touched file in that project rather than
-  worked around blindly.
+- **Schema-validated in CI, not just tested by hand.** `aapt2` happily packages a
+  `watchface.xml` that violates the actual WFF schema — it caught nothing wrong with
+  `isCustomizable="true"`, which is invalid (the schema requires uppercase
+  `TRUE`/`FALSE`). That bug was only found by running Google's own
+  [XSD validator](https://github.com/google/watchface/tree/main/third_party/wff)
+  against the source XML — the same tool used to certify watch faces for Play Store
+  submission. After fixing it, `watchface.xml` **passes cleanly against both format
+  version 1 and the latest version 5**, with zero errors. This check now runs on every
+  push via [CI](.github/workflows/build.yml), so a future schema regression fails the
+  build instead of silently shipping.
+- Also ran Google's [`memory-footprint`](https://github.com/google/watchface/tree/main/play-validations)
+  evaluator (the Play Store memory-budget check) against the built APK. It hit what
+  looks like a bug in that tool's own resource resolver for plain scene-level
+  `PartImage` references — confirmed as tool-side, not ours, once the XSD validator
+  above gave the XML a clean pass. Traced to a recently-touched file in that project
+  rather than worked around blindly.
 
 ## Features
 
@@ -96,6 +103,16 @@ A few decisions worth calling out, since they weren't the first thing tried:
   characters rotate to stay tangent to the arc, which at small font sizes near the
   9/3 o'clock positions renders as unreadable noise. The fix wasn't a bug fix, it was a
   design change: switch to straight horizontal text.
+- **Cross-device font fallback, fixed at the metadata level.** A user reported the
+  fonts not matching on a Galaxy Watch 6. WFF resolves `Font family="…"` by resource
+  *filename*, which `roboto_mono_bold.ttf` and `roboto_mono_regular.ttf` already did
+  correctly — but inspecting the compiled fonts (`fontTools`) showed both files declared
+  the *same internal family name* ("Roboto Mono"), differing only by subfamily. Pixel
+  Watch's renderer tolerates that; some other Wear OS font-loading implementations
+  appear to de-duplicate/cache typefaces by internal family name, which would silently
+  collapse both weights into one (or fail to resolve either, falling back to the system
+  font — exactly the reported symptom). Fixed by giving each file a distinct internal
+  family name matching its filename, with no XML or filename changes needed.
 
 ## Color themes
 
