@@ -5,6 +5,8 @@
 [![Build](https://github.com/mariomarquesinf/mrrobot-watchface/actions/workflows/build.yml/badge.svg)](https://github.com/mariomarquesinf/mrrobot-watchface/actions/workflows/build.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
+Criado por [Mário Marques](https://mariomarquesinf.com) — [mariomarquesinf.com](https://mariomarquesinf.com)
+
 Uma watch face totalmente declarativa e sem código executável para Wear OS, com a
 estética hacker/terminal da série **Mr. Robot** (fsociety). Construída inteiramente no
 **Watch Face Format (WFF)** da Google — um grafo de cena em XML interpretado
@@ -42,7 +44,10 @@ Os compromissos que moldaram este projeto:
   real de cursor de terminal, controlado por uma expressão `[SECOND] % 2`, não uma
   animação fixa).
 - **Relógio digital em destaque** — mostrador `hh:mm:ss` grande e centrado, o elemento
-  visual principal.
+  visual principal, com um breve pulso de glitch RGB (aberração cromática) a cada 10
+  segundos (duas cópias "fantasma" do relógio, desviadas de cor, aparecem e desaparecem
+  através de uma expressão `[SECOND] % 10`) — um toque VHS/hacker que remete diretamente
+  para a estética do próprio logo da fsociety.
 - **4 complicações reais e editáveis pelo utilizador** (data, batimentos, bateria,
   passos por defeito — livremente substituíveis por qualquer coisa que o sistema
   ofereça), organizadas numa grelha 2×2 reta e legível, em vez de texto curvado no bezel.

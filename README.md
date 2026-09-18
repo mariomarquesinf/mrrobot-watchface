@@ -5,6 +5,8 @@
 [![Build](https://github.com/mariomarquesinf/mrrobot-watchface/actions/workflows/build.yml/badge.svg)](https://github.com/mariomarquesinf/mrrobot-watchface/actions/workflows/build.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
+Built by [Mário Marques](https://mariomarquesinf.com) — [mariomarquesinf.com](https://mariomarquesinf.com)
+
 A fully declarative, zero-code watch face for Wear OS, styled after the hacker/terminal
 aesthetic of **Mr. Robot** (fsociety). Built entirely in Google's **Watch Face Format
 (WFF)** — an XML scene graph interpreted natively by the OS, with no background service,
@@ -37,7 +39,10 @@ own first-party faces. The trade-offs that shaped this project:
 - **Terminal HUD aesthetic** — `root@fsociety:~#` prompt, `HELLO, FRIEND.` greeting, and
   a footer cursor that blinks in sync with the seconds tick (real terminal cursor
   behavior, driven by a `[SECOND] % 2` expression, not a fixed animation).
-- **Hero digital clock** — large centered `hh:mm:ss` display, the visual focal point.
+- **Hero digital clock** — large centered `hh:mm:ss` display, the visual focal point,
+  with a brief RGB chromatic-aberration glitch pulse every 10 seconds (two color-shifted
+  ghost copies of the clock flash in and out via a `[SECOND] % 10` expression) —
+  a VHS/hacker-glitch touch matching the fsociety logo's own aesthetic.
 - **4 live, user-editable complications** (date, heart rate, battery, steps by default —
   freely reassignable to anything the OS offers) laid out as a straight, legible 2×2
   grid rather than curved bezel text.

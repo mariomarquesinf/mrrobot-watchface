@@ -103,6 +103,31 @@
         </PartText>
 
         <!-- =================================================== -->
+        <!-- GLITCH: fantasmas RGB (aberração cromática) atrás do -->
+        <!-- relógio, pulsam ~1s a cada 10s (ao ritmo de [SECOND]) -->
+        <!-- Estética hacker/VHS, referência direta ao logo com   -->
+        <!-- glitch RGB da fsociety usado na marca de água.       -->
+        <!-- =================================================== -->
+        <Group name="clock_glitch_red" x="-3" y="88" width="450" height="100">
+            <Transform target="alpha" value="[SECOND] % 10 == 0 ? 90 : 0" />
+            <DigitalClock x="0" y="0" width="450" height="100">
+                <TimeText x="0" y="0" width="450" height="100" format="hh:mm:ss"
+                    hourFormat="SYNC_TO_DEVICE" align="CENTER">
+                    <Font family="mr_robot" size="60" color="#FF2E63" />
+                </TimeText>
+            </DigitalClock>
+        </Group>
+        <Group name="clock_glitch_cyan" x="3" y="88" width="450" height="100">
+            <Transform target="alpha" value="[SECOND] % 10 == 0 ? 90 : 0" />
+            <DigitalClock x="0" y="0" width="450" height="100">
+                <TimeText x="0" y="0" width="450" height="100" format="hh:mm:ss"
+                    hourFormat="SYNC_TO_DEVICE" align="CENTER">
+                    <Font family="mr_robot" size="60" color="#00F0FF" />
+                </TimeText>
+            </DigitalClock>
+        </Group>
+
+        <!-- =================================================== -->
         <!-- RELÓGIO DIGITAL: ELEMENTO HERÓICO, MÁXIMO DESTAQUE  -->
         <!-- =================================================== -->
         <DigitalClock x="0" y="88" width="450" height="100">
