@@ -45,12 +45,26 @@ own first-party faces. The trade-offs that shaped this project:
   recolored live via the active theme's accent color, at low opacity so it stays a
   background element.
 - **HUD corner reticle** instead of a plain bezel ring.
+- **Real always-on/ambient (AOD) mode** — not just an unmodified low-power copy of the
+  interactive face. The full HUD (watermark, reticle, header, status lines, footer)
+  hides entirely in ambient, replaced by a dimmed, seconds-free clock and date; the
+  4 complications stay visible but dimmed. Keeps well under the Wear OS guideline of
+  15% illuminated pixels in ambient, and reduces AMOLED burn-in risk.
 - **6 interchangeable color themes**, switchable on-device with zero code changes.
 
 ## Architecture notes
 
 A few decisions worth calling out, since they weren't the first thing tried:
 
+- **Ambient mode uses parallel `Group`s toggled by `Variant`, not a single reformatted
+  scene.** WFF has no conditional layout ("if ambient, do X"); instead you declare two
+  versions of a subtree — one for interactive, one for ambient — each with
+  `<Variant mode="AMBIENT" target="alpha" value="…"/>` flipping its own visibility. The
+  interactive HUD is one `Group` that fades to `alpha=0` in ambient; the ambient clock/
+  date is a separate `Group` that starts at `alpha=0` and fades in only in ambient. Kept
+  the 4 `ComplicationSlot`s outside both groups (nesting them in a `Group` isn't a
+  documented pattern) and instead dimmed their icon/text directly via the same `Variant`
+  mechanism.
 - **Complications show only the raw value in brackets** (`[62]`, `[1189]`), never a
   hardcoded category label like `BAT:` or `STP:`. Early versions baked in a label per
   slot; the problem is a user can reassign any slot to a *different* data source (e.g.

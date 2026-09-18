@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.fsociety.mrrobotwatchface"
-    android:versionCode="35"
-    android:versionName="2.7.3">
+    android:versionCode="38"
+    android:versionName="2.8.2">
 
     <uses-feature android:name="android.hardware.type.watch" />
 

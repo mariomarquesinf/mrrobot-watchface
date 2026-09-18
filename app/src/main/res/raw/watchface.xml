@@ -27,6 +27,14 @@
     <Scene backgroundColor="#000000">
 
         <!-- =================================================== -->
+        <!-- MODO INTERATIVO: HUD completo. Ocultado inteiramente -->
+        <!-- em modo ambiente (AOD) para poupar bateria e evitar  -->
+        <!-- burn-in no ecrã AMOLED (ver Group "ambient_ui" abaixo). -->
+        <!-- =================================================== -->
+        <Group name="active_ui" x="0" y="0" width="450" height="450">
+            <Variant mode="AMBIENT" target="alpha" value="0" />
+
+        <!-- =================================================== -->
         <!-- FUNDO: MARCA DE ÁGUA fsociety (desvanecida, cor do tema) -->
         <!-- =================================================== -->
         <PartImage x="65" y="65" width="320" height="320" alpha="40" tintColor="[CONFIGURATION.themeColor.1]">
@@ -127,6 +135,10 @@
             </Text>
         </PartText>
 
+        </Group>
+        <!-- fim de "active_ui": complicações ficam sempre visíveis, -->
+        <!-- são pequenas e de baixo custo em pixels acesos.         -->
+
         <!-- =================================================== -->
         <!-- TELEMETRIA: 4 COMPLICAÇÕES REAIS, GRELHA 2x2 RETA   -->
         <!-- Ícone da própria fonte de dados escolhida = label     -->
@@ -146,9 +158,11 @@
 
             <Complication type="SHORT_TEXT">
                 <PartImage x="130" y="4" width="16" height="16" tintColor="[CONFIGURATION.themeColor.1]">
+                    <Variant mode="AMBIENT" target="alpha" value="140" />
                     <Image resource="[COMPLICATION.MONOCHROMATIC_IMAGE]" />
                 </PartImage>
                 <PartText x="150" y="0" width="58" height="24">
+                    <Variant mode="AMBIENT" target="alpha" value="140" />
                     <Text align="START">
                         <Font family="roboto_mono_bold" size="16" color="[CONFIGURATION.themeColor.1]">
                             <Template>
@@ -174,9 +188,11 @@
 
             <Complication type="SHORT_TEXT">
                 <PartImage x="22" y="4" width="16" height="16" tintColor="[CONFIGURATION.themeColor.1]">
+                    <Variant mode="AMBIENT" target="alpha" value="140" />
                     <Image resource="[COMPLICATION.MONOCHROMATIC_IMAGE]" />
                 </PartImage>
                 <PartText x="42" y="0" width="58" height="24">
+                    <Variant mode="AMBIENT" target="alpha" value="140" />
                     <Text align="START">
                         <Font family="roboto_mono_bold" size="16" color="[CONFIGURATION.themeColor.1]">
                             <Template>
@@ -202,9 +218,11 @@
 
             <Complication type="RANGED_VALUE">
                 <PartImage x="130" y="4" width="16" height="16" tintColor="[CONFIGURATION.themeColor.0]">
+                    <Variant mode="AMBIENT" target="alpha" value="140" />
                     <Image resource="[COMPLICATION.MONOCHROMATIC_IMAGE]" />
                 </PartImage>
                 <PartText x="150" y="0" width="58" height="24">
+                    <Variant mode="AMBIENT" target="alpha" value="140" />
                     <Text align="START">
                         <Font family="roboto_mono_bold" size="16" color="[CONFIGURATION.themeColor.0]">
                             <Template>
@@ -218,9 +236,11 @@
 
             <Complication type="SHORT_TEXT">
                 <PartImage x="130" y="4" width="16" height="16" tintColor="[CONFIGURATION.themeColor.0]">
+                    <Variant mode="AMBIENT" target="alpha" value="140" />
                     <Image resource="[COMPLICATION.MONOCHROMATIC_IMAGE]" />
                 </PartImage>
                 <PartText x="150" y="0" width="58" height="24">
+                    <Variant mode="AMBIENT" target="alpha" value="140" />
                     <Text align="START">
                         <Font family="roboto_mono_bold" size="16" color="[CONFIGURATION.themeColor.0]">
                             <Template>
@@ -246,9 +266,11 @@
 
             <Complication type="RANGED_VALUE">
                 <PartImage x="22" y="4" width="16" height="16" tintColor="[CONFIGURATION.themeColor.0]">
+                    <Variant mode="AMBIENT" target="alpha" value="140" />
                     <Image resource="[COMPLICATION.MONOCHROMATIC_IMAGE]" />
                 </PartImage>
                 <PartText x="42" y="0" width="58" height="24">
+                    <Variant mode="AMBIENT" target="alpha" value="140" />
                     <Text align="START">
                         <Font family="roboto_mono_bold" size="16" color="[CONFIGURATION.themeColor.0]">
                             <Template>
@@ -262,9 +284,11 @@
 
             <Complication type="SHORT_TEXT">
                 <PartImage x="22" y="4" width="16" height="16" tintColor="[CONFIGURATION.themeColor.0]">
+                    <Variant mode="AMBIENT" target="alpha" value="140" />
                     <Image resource="[COMPLICATION.MONOCHROMATIC_IMAGE]" />
                 </PartImage>
                 <PartText x="42" y="0" width="58" height="24">
+                    <Variant mode="AMBIENT" target="alpha" value="140" />
                     <Text align="START">
                         <Font family="roboto_mono_bold" size="16" color="[CONFIGURATION.themeColor.0]">
                             <Template>
@@ -276,6 +300,9 @@
                 </PartText>
             </Complication>
         </ComplicationSlot>
+
+        <Group name="active_ui_footer" x="0" y="0" width="450" height="450">
+            <Variant mode="AMBIENT" target="alpha" value="0" />
 
         <!-- =================================================== -->
         <!-- STATUS HACKER (ESTÉTICA MR. ROBOT / ROOT ACCESS)    -->
@@ -310,6 +337,48 @@
                 <Font family="roboto_mono_bold" size="12" color="[CONFIGURATION.themeColor.1]">_</Font>
             </Text>
         </PartText>
+
+        </Group>
+
+        <!-- =================================================== -->
+        <!-- MODO AMBIENTE (AOD): apenas horas (sem segundos) e   -->
+        <!-- data, em tom apagado. Invisível em modo interativo   -->
+        <!-- (alpha="0"), só aparece via Variant mode="AMBIENT".  -->
+        <!-- Cumpre a diretriz Wear OS de <15% de pixels acesos.  -->
+        <!-- =================================================== -->
+        <Group name="ambient_ui" x="0" y="0" width="450" height="450" alpha="0">
+            <Variant mode="AMBIENT" target="alpha" value="255" />
+
+            <!-- Referência Mr. Robot discreta, mantém identidade também em ambiente -->
+            <PartText x="0" y="26" width="450" height="16">
+                <Text align="CENTER">
+                    <Font family="roboto_mono_bold" size="10" color="#555555">root@fsociety:~#</Font>
+                </Text>
+            </PartText>
+
+            <DigitalClock x="0" y="50" width="450" height="140">
+                <TimeText
+                    x="0" y="0" width="450" height="140"
+                    format="hh:mm"
+                    hourFormat="SYNC_TO_DEVICE"
+                    align="CENTER">
+                    <Font family="mr_robot" size="66" color="#666666" />
+                </TimeText>
+            </DigitalClock>
+
+            <PartText x="0" y="196" width="450" height="16">
+                <Text align="CENTER">
+                    <Font family="roboto_mono_regular" size="12" color="#4A4A4A">
+                        <Template>
+                            <![CDATA[%s.%s.%s]]>
+                            <Parameter expression="[YEAR]" />
+                            <Parameter expression="[MONTH_Z]" />
+                            <Parameter expression="[DAY_Z]" />
+                        </Template>
+                    </Font>
+                </Text>
+            </PartText>
+        </Group>
 
     </Scene>
 </WatchFace>

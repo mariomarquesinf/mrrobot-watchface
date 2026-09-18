@@ -50,6 +50,12 @@ Os compromissos que moldaram este projeto:
   monocromática para poder ser recolorida em tempo real de acordo com a cor de destaque
   do tema ativo, com opacidade baixa para permanecer um elemento de fundo.
 - **Retícula HUD nos cantos** em vez de um simples aro circular.
+- **Modo ambiente/always-on (AOD) real** — não é apenas uma cópia de baixo consumo não
+  modificada da watch face interativa. Todo o HUD (marca de água, retícula, cabeçalho,
+  linhas de estado, rodapé) desaparece por completo em modo ambiente, substituído por um
+  relógio e data esbatidos e sem segundos; as 4 complicações mantêm-se visíveis mas
+  esbatidas. Mantém-se bem abaixo da diretriz do Wear OS de 15% de pixels acesos em modo
+  ambiente, e reduz o risco de burn-in em ecrãs AMOLED.
 - **6 paletas de cor intercambiáveis**, alteráveis no próprio relógio sem qualquer
   alteração de código.
 
@@ -58,6 +64,15 @@ Os compromissos que moldaram este projeto:
 Algumas decisões que vale a pena destacar, porque não foram a primeira abordagem
 tentada:
 
+- **O modo ambiente usa `Group`s paralelos alternados por `Variant`, não uma única cena
+  reformatada.** O WFF não tem layout condicional ("se ambiente, faz X"); em vez disso
+  declaram-se duas versões de uma sub-árvore — uma para modo interativo, outra para modo
+  ambiente — cada uma com `<Variant mode="AMBIENT" target="alpha" value="…"/>` a alternar
+  a sua própria visibilidade. O HUD interativo é um `Group` que passa a `alpha=0` em modo
+  ambiente; o relógio/data de ambiente é um `Group` separado que começa em `alpha=0` e só
+  aparece em modo ambiente. Os 4 `ComplicationSlot` ficaram fora de ambos os grupos
+  (aninhá-los num `Group` não é um padrão documentado) e, em vez disso, o ícone/texto de
+  cada um é esbatido diretamente através do mesmo mecanismo `Variant`.
 - **As complicações mostram apenas o valor em bruto entre parênteses retos** (`[62]`,
   `[1189]`), nunca uma etiqueta de categoria fixa como `BAT:` ou `STP:`. As primeiras
   versões tinham uma etiqueta fixa por slot; o problema é que o utilizador pode
