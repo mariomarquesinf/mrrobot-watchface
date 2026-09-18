@@ -27,3 +27,15 @@ reddit_screenshots/
 
 # Claude Code local session/tooling state
 .claude/
+CLAUDE.md
+
+# Old design exploration renders (not part of the shipped watch face)
+arc_option_1.png
+arc_option_2.png
+bezel_arc_preview.png
+bezel_arc_preview_v2.png
+bezel_arc_pro.png
+bezel_arc_pro_v2.png
+design_A_grid.png
+design_B_photo_track.png
+emulator_preview.png
