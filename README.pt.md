@@ -1,0 +1,133 @@
+[🇬🇧 English](README.md) | [🇵🇹 Português](README.pt.md)
+
+# Mr. Robot Terminal — Watch Face para Wear OS
+
+[![Build](https://github.com/mariomarquesinf/mrrobot-watchface/actions/workflows/build.yml/badge.svg)](https://github.com/mariomarquesinf/mrrobot-watchface/actions/workflows/build.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
+Uma watch face totalmente declarativa e sem código executável para Wear OS, com a
+estética hacker/terminal da série **Mr. Robot** (fsociety). Construída inteiramente no
+**Watch Face Format (WFF)** da Google — um grafo de cena em XML interpretado
+nativamente pelo sistema operativo, sem serviço em segundo plano, sem código de
+aplicação, e com impacto mínimo na bateria.
+
+![Demo](docs/screenshots/demo.gif)
+
+![As seis paletas de cor](docs/screenshots/all_themes.png)
+
+## Porquê o Watch Face Format
+
+Historicamente, a maioria das watch faces de terceiros para Wear OS era um serviço
+Android em execução (um `WatchFaceService` com um ciclo de renderização, a executar
+código a cada tick). O WFF inverte essa lógica: a watch face é um **documento XML
+declarativo** — formas, texto, complicações e configuração de cor — que o próprio
+renderizador do sistema desenha, exatamente como desenha as suas watch faces nativas.
+Os compromissos que moldaram este projeto:
+
+- **Nenhum código executável** (`android:hasCode="false"`) — toda a lógica visual e de
+  ligação de dados vive em `app/src/main/res/raw/watchface.xml`.
+- **Ciclo de vida gerido pelo sistema** — o modo ambiente, a proteção contra burn-in e a
+  gestão de bateria são tratados pelo renderizador do SO, não por lógica própria.
+- **Sem forma de fazer testes unitários.** Não existe runtime ao qual anexar um debugger
+  ou uma test suite — a correção só pode ser verificada instalando o grafo de cena
+  compilado num relógio real e observando o resultado. Todas as decisões de layout e de
+  ligação de dados deste repositório foram validadas empiricamente via ADB (`logcat` ao
+  vivo + screenshots no dispositivo), o que vale a pena saber antes de assumir que
+  "renderiza" significa "está correto."
+
+## Funcionalidades
+
+- **Estética de terminal/HUD hacker** — prompt `root@fsociety:~#`, saudação
+  `HELLO, FRIEND.`, e um cursor no rodapé que pisca ao ritmo dos segundos (comportamento
+  real de cursor de terminal, controlado por uma expressão `[SECOND] % 2`, não uma
+  animação fixa).
+- **Relógio digital em destaque** — mostrador `hh:mm:ss` grande e centrado, o elemento
+  visual principal.
+- **4 complicações reais e editáveis pelo utilizador** (data, batimentos, bateria,
+  passos por defeito — livremente substituíveis por qualquer coisa que o sistema
+  ofereça), organizadas numa grelha 2×2 reta e legível, em vez de texto curvado no bezel.
+- **Marca de água com a máscara da fsociety**, renderizada como uma máscara de alpha
+  monocromática para poder ser recolorida em tempo real de acordo com a cor de destaque
+  do tema ativo, com opacidade baixa para permanecer um elemento de fundo.
+- **Retícula HUD nos cantos** em vez de um simples aro circular.
+- **6 paletas de cor intercambiáveis**, alteráveis no próprio relógio sem qualquer
+  alteração de código.
+
+## Notas de arquitetura
+
+Algumas decisões que vale a pena destacar, porque não foram a primeira abordagem
+tentada:
+
+- **As complicações mostram apenas o valor em bruto entre parênteses retos** (`[62]`,
+  `[1189]`), nunca uma etiqueta de categoria fixa como `BAT:` ou `STP:`. As primeiras
+  versões tinham uma etiqueta fixa por slot; o problema é que o utilizador pode
+  reatribuir qualquer slot a uma fonte de dados *diferente* (por exemplo, trocar "data"
+  pela pontuação de "prontidão" de uma app de fitness) através da interface padrão de
+  personalização do Wear OS, e uma etiqueta fixa ficaria incorreta silenciosamente. Em
+  vez disso, cada complicação mostra o ícone `MONOCHROMATIC_IMAGE` do próprio provedor
+  atribuído, ao lado do valor — a etiqueta vem sempre do que está realmente selecionado,
+  por isso nunca pode ficar dessincronizada.
+- **Tematização centralizada.** Todos os elementos coloridos — texto, ícones, o tom da
+  marca de água, as linhas divisórias — estão ligados a
+  `[CONFIGURATION.themeColor.N]`. Adicionar um 7º tema significa adicionar um bloco
+  `<ColorOption>`; nenhum outro ficheiro precisa de ser alterado.
+- **O texto curvado no bezel foi tentado e revertido.** Uma iteração anterior desenhava
+  os valores das complicações a envolver o bezel com `TextCircular`. Parecia correto no
+  XML e correspondia à geometria documentada, mas era empiricamente ilegível no
+  dispositivo — os caracteres rodam para se manterem tangentes ao arco, o que em
+  tamanhos de letra pequenos perto das posições de 9/3 horas resulta em ruído
+  ilegível. A correção não foi uma correção de bug, foi uma mudança de design: passar
+  para texto horizontal reto.
+
+## Paletas de cor
+
+| Tema | Texto | Destaque | Escuro |
+|---|---|---|---|
+| fsociety Vermelho (padrão) | `#FFE4E6` | `#F43F5E` | `#881337` |
+| Lavanda Neon | `#E9D5FF` | `#C084FC` | `#4C1D95` |
+| Kali Verde Terminal | `#DCFCE7` | `#22C55E` | `#14532D` |
+| Cyber Ciano | `#E0F2FE` | `#06B6D4` | `#164E63` |
+| Fósforo Âmbar | `#FEF3C7` | `#F59E0B` | `#78350F` |
+| Stealth Branco | `#FFFFFF` | `#CBD5E1` | `#334155` |
+
+## Instalação
+
+**APK pré-compilado:** obtém a versão mais recente em [Releases](../../releases) e
+instala-a via sideload:
+```bash
+adb install mrrobot_watchface.apk
+```
+De seguida, mantém premida a watch face atual e seleciona **Mr. Robot Terminal**.
+
+**Compilar a partir do código-fonte:**
+```bash
+./gradlew assembleDebug
+```
+ou, para um ciclo de iteração local mais rápido usando `aapt2` diretamente (ver
+`tools/build_apk.ps1`):
+```powershell
+./tools/build_apk.ps1
+```
+Requer Wear OS 4+ (API 33+) no dispositivo de destino.
+
+## Estrutura do projeto
+
+```
+watchFace/
+├── app/
+│   └── src/main/
+│       ├── AndroidManifest.xml       # Declaração da versão do WFF, sem código
+│       └── res/
+│           ├── raw/watchface.xml     # Todo o grafo de cena: layout, complicações, tematização
+│           ├── drawable/             # Ícone da app, preview da loja, marca de água
+│           ├── font/                 # Tipos de letra personalizados de terminal/display
+│           └── values/strings.xml    # Nomes dos temas e dos slots de complicação
+├── tools/                            # Scripts locais de desenvolvimento (build rápido via aapt2, instalação ADB, preview de emulador)
+├── docs/screenshots/                 # Galeria de temas
+└── build.gradle.kts / settings.gradle.kts
+```
+
+## Licença
+
+MIT — ver [LICENSE](LICENSE). "Mr. Robot" e "fsociety" pertencem aos respetivos
+detentores dos direitos; este é um projeto de fã não oficial e sem fins comerciais.

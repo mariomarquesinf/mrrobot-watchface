@@ -1,9 +1,16 @@
+[🇬🇧 English](README.md) | [🇵🇹 Português](README.pt.md)
+
 # Mr. Robot Terminal — Wear OS Watch Face
+
+[![Build](https://github.com/mariomarquesinf/mrrobot-watchface/actions/workflows/build.yml/badge.svg)](https://github.com/mariomarquesinf/mrrobot-watchface/actions/workflows/build.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 A fully declarative, zero-code watch face for Wear OS, styled after the hacker/terminal
 aesthetic of **Mr. Robot** (fsociety). Built entirely in Google's **Watch Face Format
 (WFF)** — an XML scene graph interpreted natively by the OS, with no background service,
 no APK code, and minimal battery impact.
+
+![Demo](docs/screenshots/demo.gif)
 
 ![All six color themes](docs/screenshots/all_themes.png)
 
