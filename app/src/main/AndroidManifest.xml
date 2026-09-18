@@ -1,0 +1,21 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.fsociety.mrrobotwatchface"
+    android:versionCode="35"
+    android:versionName="2.7.3">
+
+    <uses-feature android:name="android.hardware.type.watch" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@android:style/Theme.DeviceDefault"
+        android:hasCode="false">
+
+        <!-- Watch Face Format version 1 (compatible with Wear OS 4 / 5, Pixel Watch 2/3/4) -->
+        <property
+            android:name="com.google.wear.watchface.format.version"
+            android:value="1" />
+
+    </application>
+</manifest>

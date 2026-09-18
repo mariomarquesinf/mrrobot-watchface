@@ -1,0 +1,29 @@
+# Build outputs
+/build/
+/app/build/
+*.apk
+*.apk.idsig
+compiled_res.zip
+app_unaligned.apk
+mrrobot_aligned.apk
+
+# Local machine config
+local.properties
+debug.keystore
+
+# IDE
+.idea/
+*.iml
+
+# Gradle
+.gradle/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Scratch / diagnostics
+reddit_screenshots/
+
+# Claude Code local session/tooling state
+.claude/

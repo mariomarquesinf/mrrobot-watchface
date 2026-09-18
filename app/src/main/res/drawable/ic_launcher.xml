@@ -1,0 +1,20 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <path
+        android:fillColor="#0D0D11"
+        android:pathData="M0,0h108v108h-108z" />
+    <!-- Terminal Prompt bracket and prompt symbol in lavender -->
+    <path
+        android:fillColor="#C084FC"
+        android:pathData="M32,38 L48,54 L32,70 L36,74 L56,54 L36,34 Z" />
+    <path
+        android:fillColor="#E9D5FF"
+        android:pathData="M60,68 L80,68 L80,74 L60,74 Z" />
+    <!-- Subtle top dot / accent -->
+    <path
+        android:fillColor="#A855F7"
+        android:pathData="M72,36 A4,4 0 1,1 72,44 A4,4 0 1,1 72,36" />
+</vector>
