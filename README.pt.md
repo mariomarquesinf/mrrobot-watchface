@@ -129,6 +129,18 @@ tentada:
   qualquer um deles, recorrendo à fonte do sistema — exatamente o sintoma reportado).
   Corrigido atribuindo a cada ficheiro um nome de família interno distinto, coincidente
   com o seu nome de ficheiro, sem necessidade de alterar XML ou nomes de ficheiro.
+- **Interface de personalização localizada, não apenas em português fixo.** Todas as
+  strings mostradas no seletor nativo de cores/complicações do Wear OS (nomes de temas,
+  etiquetas dos slots) estavam fixas em português no `values/strings.xml` *default* —
+  o Android recorre a esse ficheiro para qualquer idioma sem override próprio, pelo que
+  utilizadores de língua inglesa (como quem encontra isto via Reddit, ou quem reportou
+  o bug do Galaxy Watch 6 acima) viam "Cor do Terminal" e "Lavanda Neon" no seletor,
+  independentemente do idioma do dispositivo. Movi as strings em inglês para o
+  `values/strings.xml` default e adicionei um `values-pt/strings.xml` próprio para
+  dispositivos em português — resolução de recursos padrão do Android, verificada no
+  APK compilado via `aapt2 dump resources`. Também apanhei e corrigi um resquício
+  esquecido ao fazer isto: a marca "(Padrão)" ainda estava na Lavanda, de antes do tema
+  por defeito ter passado para o fsociety Vermelho.
 
 ## Paletas de cor
 

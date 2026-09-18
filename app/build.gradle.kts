@@ -10,8 +10,8 @@ android {
         applicationId = "com.fsociety.mrrobotwatchface"
         minSdk = 33 // Wear OS 4 (WFF v1) is supported on API 33+
         targetSdk = 34
-        versionCode = 41
-        versionName = "2.9.2"
+        versionCode = 42
+        versionName = "2.9.3"
     }
 
     buildTypes {

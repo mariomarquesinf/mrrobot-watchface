@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Mr. Robot Terminal</string>
+    <string name="watch_face_name">Mr. Robot Terminal</string>
+
+    <!-- Color Configuration Names -->
+    <string name="theme_color">Cor do Terminal</string>
+    <string name="color_lavender">Lavanda Neon</string>
+    <string name="color_fsociety_red">fsociety Vermelho (Padrão)</string>
+    <string name="color_terminal_green">Kali Verde Terminal</string>
+    <string name="color_cyber_cyan">Cyber Ciano</string>
+    <string name="color_amber">Fósforo Âmbar CRT</string>
+    <string name="color_monochrome">Branco Stealth</string>
+
+    <!-- Complication Slots -->
+    <string name="slot_weather_label">HUD Superior Esquerda (Data / Geral)</string>
+    <string name="slot_heart_label">HUD Superior Direita (Batimentos BPM)</string>
+    <string name="slot_readiness_label">HUD Inferior Esquerda (Prontidão / Bateria)</string>
+    <string name="slot_steps_label">HUD Inferior Direita (Contador de Passos)</string>
+</resources>

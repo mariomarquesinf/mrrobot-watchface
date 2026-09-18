@@ -4,17 +4,17 @@
     <string name="watch_face_name">Mr. Robot Terminal</string>
 
     <!-- Color Configuration Names -->
-    <string name="theme_color">Cor do Terminal</string>
-    <string name="color_lavender">Lavanda Neon (Padrão)</string>
-    <string name="color_fsociety_red">fsociety Vermelho</string>
-    <string name="color_terminal_green">Kali Verde Terminal</string>
-    <string name="color_cyber_cyan">Cyber Ciano</string>
-    <string name="color_amber">Fósforo Âmbar CRT</string>
-    <string name="color_monochrome">Branco Stealth</string>
+    <string name="theme_color">Terminal Color</string>
+    <string name="color_lavender">Neon Lavender</string>
+    <string name="color_fsociety_red">fsociety Red (Default)</string>
+    <string name="color_terminal_green">Kali Terminal Green</string>
+    <string name="color_cyber_cyan">Cyber Cyan</string>
+    <string name="color_amber">Amber CRT Phosphor</string>
+    <string name="color_monochrome">Stealth White</string>
 
     <!-- Complication Slots -->
-    <string name="slot_weather_label">HUD Superior Esquerda (Clima / Geral)</string>
-    <string name="slot_heart_label">HUD Superior Direita (Batimentos BPM)</string>
-    <string name="slot_readiness_label">HUD Inferior Esquerda (Prontidão / Bateria)</string>
-    <string name="slot_steps_label">HUD Inferior Direita (Contador de Passos)</string>
+    <string name="slot_weather_label">Top Left HUD (Date / General)</string>
+    <string name="slot_heart_label">Top Right HUD (Heart Rate BPM)</string>
+    <string name="slot_readiness_label">Bottom Left HUD (Readiness / Battery)</string>
+    <string name="slot_steps_label">Bottom Right HUD (Step Count)</string>
 </resources>

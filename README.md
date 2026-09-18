@@ -113,6 +113,17 @@ A few decisions worth calling out, since they weren't the first thing tried:
   collapse both weights into one (or fail to resolve either, falling back to the system
   font — exactly the reported symptom). Fixed by giving each file a distinct internal
   family name matching its filename, with no XML or filename changes needed.
+- **Localized customization UI, not just hardcoded Portuguese.** All the strings shown
+  in Wear OS's native color/complication picker (theme names, slot labels) were
+  hardcoded Portuguese in the *default* `values/strings.xml` — Android falls back to
+  that file for every locale that has no override, so English-speaking users (like
+  everyone finding this from Reddit, or the Galaxy Watch 6 reporter above) were seeing
+  "Cor do Terminal" and "Lavanda Neon" in their picker regardless of device language.
+  Moved the English strings into the default `values/strings.xml` and added a proper
+  `values-pt/strings.xml` override for Portuguese devices — standard Android resource
+  resolution, verified present in the compiled APK via `aapt2 dump resources`. Also
+  caught and fixed a stale leftover while doing this: the "(Default)" marker was still
+  on Lavender from before the default theme was switched to fsociety Red.
 
 ## Color themes
 
