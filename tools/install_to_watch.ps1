@@ -9,9 +9,10 @@ if (-not (Test-Path $adb)) {
     $adb = "adb"
 }
 
-$apkPath = "$PSScriptRoot\mrrobot_watchface.apk"
+$repoRoot = Split-Path -Parent $PSScriptRoot
+$apkPath = "$repoRoot\mrrobot_watchface.apk"
 if (-not (Test-Path $apkPath)) {
-    $apkPath = "$PSScriptRoot\app\build\outputs\apk\debug\app-debug.apk"
+    $apkPath = "$repoRoot\app\build\outputs\apk\debug\app-debug.apk"
 }
 
 Write-Host "==========================================" -ForegroundColor Cyan
@@ -50,7 +51,7 @@ Write-Host "A instalar o mostrador Mr. Robot..." -ForegroundColor Cyan
 
 if ($LASTEXITCODE -eq 0) {
     Write-Host ""
-    Write-Host "[OK] Instalado com sucesso no Pixel Watch (v2.0 / Code 20)!" -ForegroundColor Green
+    Write-Host "[OK] Instalado com sucesso no Pixel Watch!" -ForegroundColor Green
     
     Write-Host "A limpar a cache de mostradores do Wear OS..." -ForegroundColor Cyan
     & $adb -s $target shell am force-stop com.fsociety.mrrobotwatchface 2>$null

@@ -39,3 +39,6 @@ bezel_arc_pro_v2.png
 design_A_grid.png
 design_B_photo_track.png
 emulator_preview.png
+tools/generate_preview.py
+tools/render_pro_options.ps1
+tools/test_two_layouts.ps1
